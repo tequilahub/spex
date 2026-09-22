@@ -371,16 +371,19 @@ std::complex<double> inner_product(const State& psi, const State& phi) {
         throw std::invalid_argument("Quantum states cannot be empty.");
     }
 
-    // Determine the smaller state for optimization
-    const State* smaller_state = (psi.size() < phi.size()) ? &psi : &phi;
-    const State* larger_state = (smaller_state == &psi) ? &phi : &psi;
+    // Iterate over the basis states of the smaller state, but always
+    // conjugate the bra (psi) side: <psi|phi> = sum_i conj(psi_i) * phi_i.
+    const bool psi_is_smaller = psi.size() < phi.size();
+    const State& smaller_state = psi_is_smaller ? psi : phi;
+    const State& larger_state = psi_is_smaller ? phi : psi;
 
-    // Iterate over the basis states of the smaller state
-    for (const auto& [basis_state, coeff_smaller] : *smaller_state) {
-        auto it = larger_state->find(basis_state);
-        if (it != larger_state->end()) {
-            result += std::conj(coeff_smaller) * it->second;
+    for (const auto& [basis_state, coeff_smaller] : smaller_state) {
+        auto it = larger_state.find(basis_state);
+        if (it == larger_state.end()) {
+            continue;
         }
+        result += psi_is_smaller ? std::conj(coeff_smaller) * it->second
+                                 : std::conj(it->second) * coeff_smaller;
     }
 
     return result;
