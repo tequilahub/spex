@@ -1,5 +1,11 @@
 # SPEX
-spex is an expectation value computation module on sparse Pauli states for [Tequila](https://github.com/tequilahub/tequila), implemented in C++ using Pybind11. It provides computation of expectation values, inner products, and application of exponential Pauli operators on sparse quantum states.
+spex is a sparse-state simulator for [Tequila](https://github.com/tequilahub/tequila), implemented in C++ using Pybind11. It provides
+
+- fermionic excitations, fSWAP and abstract generators on sparse Fock states,
+- fermionic expectation values via `FermionTerm` and `expectation_value_fermionic`,
+- expectation values, inner products and exponential Pauli operators on sparse Pauli states.
+
+Python 3.10 or newer is required.
 
 # Install
 From PyPI:
