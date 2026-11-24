@@ -11,15 +11,20 @@
 #include <iostream>
 #include <sstream>
 
+// Define SPEX_NO_PYTHON to use the core from plain C++ (see examples/cpp)
+#ifndef SPEX_NO_PYTHON
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/complex.h>
+#endif
 
 #include "include/unordered_dense.h"
 
 
 // Namespace for Pybind11
+#ifndef SPEX_NO_PYTHON
 namespace py = pybind11;
+#endif
 
 // Type definition for the quantum state
 using State = ankerl::unordered_dense::map<uint64_t, std::complex<double>>;
@@ -638,6 +643,7 @@ std::string state_to_string(const State& state, int num_qubits) {
 
 
 
+#ifndef SPEX_NO_PYTHON
 namespace pybind11 {
 namespace detail {
 template <class Key, class T, class Hash, class KeyEqual, class Allocator>
@@ -742,3 +748,4 @@ PYBIND11_MODULE(spex_tequila, p) {
           "Convert a quantum state to a string representation",
           py::arg("state"), py::arg("num_qubits"));
 }
+#endif // SPEX_NO_PYTHON

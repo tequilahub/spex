@@ -41,7 +41,7 @@ setup(
             "tequila-basic>=1.9.0",
             "openfermion>=1.7.0",
             "pytest",
-            "pyscf",
+            "pyscf<2.15.1",  # 2.15.1 has no macOS arm64 wheel and fails to build from source
             "qulacs",
         ],
     },

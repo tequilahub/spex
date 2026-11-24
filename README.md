@@ -19,3 +19,6 @@ git clone https://github.com/tequilahub/spex.git
 cd spex
 pip install -e ".[test]"
 ```
+
+# Examples
+Self-contained fermionic and qubit examples in Python and C++, using only spex (no Tequila), are in [`examples/`](examples).

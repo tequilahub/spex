@@ -30,6 +30,12 @@ jobs:
       - name: Run tests
         run: pytest tests/ -v
 
+      - name: Run examples
+        run: for f in examples/python/*.py; do python "$f"; done
+
+      - name: Run C++ examples
+        run: for f in examples/cpp/*.cpp; do g++ -std=c++17 -pthread "$f" -o "$RUNNER_TEMP/example" && "$RUNNER_TEMP/example"; done
+
   build-sdist:
     runs-on: ubuntu-latest
     steps:
